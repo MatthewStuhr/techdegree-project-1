@@ -69,15 +69,9 @@ let quotes = [
 
 function getRandomQuote() {
     let randomQuotes = Math.floor(Math.random() * quotes.length);
-    return randomQuotes;
+    return quotes[randomQuotes];
 }
 //console.log(getRandomQuote());
-
-//print function that fills the html tags.
-function print(html) {
-  let div = document.getElementById('quote-box');
-  div.innerHTML= html;
-}
 
 //refresh function which refreshes the page every 20 seconds.
 function refresh() {
@@ -96,39 +90,42 @@ let colors = [
       '#7FFFD4',
       '#000000'
 ];
+
 //printQuote function which calls the getRandomQuote function and assigns it to the printRandomQuote variable.
 function printQuote() {
     //sets a value for the variables lsited below.
     let html = '';
     //calls the getRandomQuote for the list of quotes and properties in the array of objects.
-    let printRandomQuote = getRandomQuote();
-    let quote = quotes[printRandomQuote].quote;
-    let source = quotes[printRandomQuote].source;
-    let citation = quotes[printRandomQuote].citation;
-    let year = quotes[printRandomQuote].year;
+    let printRandomQuote = getRandomQuote(quotes);
 
     //selects the body from the css file to be able to add random colors.
     let Cbody = document.querySelector("body")
     //for loop which goes through the colors variable and picks a random color
     for(let i = 0; i <colors.length; i++){
       var randomColor = Math.floor(Math.random() * colors.length);
-        Cbody.style.backgroundColor= colors[randomColor]
+        Cbody.style.backgroundColor = colors[randomColor]
     };
 
   //displays the quote from the html file.
-    html += '<p class="quote">' + quote + '</p>';
-  //displays all object properties if every object is filled in.
-    if (citation !== '' && year !== '') {
-      html += '<p class=source>' + source + '<span class="citation">' + citation + '<span class="year">' + year + '</p>';
-    }
+    html += '<p class="quote">' + printRandomQuote.quote + '</p>';
+ //displays the source from the html file.
+    html += '<p class="source">' + printRandomQuote.source;
+//conditional statements whether the quote has a citation or year or both.
+  if ("citation" in printRandomQuote) {
+    html += '<span class="citation">' + printRandomQuote.citation + '</span>';
+  }
+
+  if ("year" in printRandomQuote) {
+    html += '<span class="year">' + printRandomQuote.year + '</span>' + '</p>';
+  }
 
  //displays html content
-  print(html);
-
+ document.getElementById("quote-box").innerHTML = html;
+  return html;
 }
 //displays a random quote when the page first loads
 printQuote();
-
+//console.log(printQuote());
 //refreshes the page every 20 seconds.
 setTimeout(refresh, 20000);
 
