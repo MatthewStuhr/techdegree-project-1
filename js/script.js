@@ -116,9 +116,9 @@ function printQuote() {
   }
 
   if ("year" in printRandomQuote) {
-    html += '<span class="year">' + printRandomQuote.year + '</span>' + '</p>';
+    html += '<span class="year">' + printRandomQuote.year + '</span>';
   }
-
+    html += '</p>';
  //displays html content
  document.getElementById("quote-box").innerHTML = html;
   return html;
